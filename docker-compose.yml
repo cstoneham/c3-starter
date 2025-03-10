@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  db:
+    build:
+      context: .
+      dockerfile: db.Dockerfile
+    ports:
+      - "5432:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=rainmaker
+      - POSTGRES_USER=rainmaker
+      - POSTGRES_PASSWORD=rainmaker
+
+  api:
+    build:
+      context: .
+      dockerfile: api.Dockerfile
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    environment:
+      - DATABASE_URL=postgres://rainmaker:rainmaker@db:5432/rainmaker
+
+  ui:
+    build:
+      context: .
+      dockerfile: ui.Dockerfile
+    ports:
+      - "3001:3001"
+    depends_on:
+      - api
+    environment:
+      - VITE_API_URL=http://api:3000/trpc
+
+volumes:
+  db-data:

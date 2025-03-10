@@ -1,5 +1,5 @@
 {
-  "name": "rainmaker",
+  "name": "c3-starter",
   "type": "module",
   "private": true,
   "workspaces": [
@@ -15,7 +15,13 @@
     "build:api": "cd api && bun run build",
     "db:start": "docker run -d --name rainmaker-db -p 5432:5432 -v postgres_data:/var/lib/postgresql/data rainmaker-postgres",
     "db:build": "docker build -t rainmaker-postgres .",
-    "db:stop": "docker stop rainmaker-db && docker rm rainmaker-db"
+    "db:stop": "docker stop rainmaker-db && docker rm rainmaker-db",
+    "docker:build": "docker compose build",
+    "docker:up": "docker compose up -d",
+    "docker:down": "docker compose down",
+    "docker:restart": "bun run docker:down && bun run docker:up",
+    "docker:logs": "docker compose logs -f",
+    "docker:clean": "docker compose down -v --rmi local"
   },
   "devDependencies": {
     "@types/bun": "latest",
