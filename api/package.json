@@ -10,6 +10,8 @@
     "@types/bun": "latest"
   },
   "dependencies": {
-    "hono": "^4.7.4"
+    "@hono/trpc-server": "^0.3.4",
+    "hono": "^4.7.4",
+    "zod": "^3.24.2"
   }
 }
