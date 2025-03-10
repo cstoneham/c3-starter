@@ -12,7 +12,10 @@
     "dev": "concurrently \"bun run dev:api\" \"bun run dev:ui\"",
     "build": "bun run build:ui && bun run build:api",
     "build:ui": "cd ui && bun run build",
-    "build:api": "cd api && bun run build"
+    "build:api": "cd api && bun run build",
+    "db:start": "docker run -d --name rainmaker-db -p 5432:5432 -v postgres_data:/var/lib/postgresql/data rainmaker-postgres",
+    "db:build": "docker build -t rainmaker-postgres .",
+    "db:stop": "docker stop rainmaker-db && docker rm rainmaker-db"
   },
   "devDependencies": {
     "@types/bun": "latest",
