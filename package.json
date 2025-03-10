@@ -7,15 +7,16 @@
     "api"
   ],
   "scripts": {
-    "dev:ui": "bun --cwd ui run dev",
-    "dev:api": "bun --cwd api run dev",
-    "dev": "bun run dev:api & bun run dev:ui",
+    "dev:ui": "cd ui && bun run dev",
+    "dev:api": "cd api && bun run dev",
+    "dev": "concurrently \"bun run dev:api\" \"bun run dev:ui\"",
     "build": "bun run build:ui && bun run build:api",
-    "build:ui": "bun --cwd ui run build",
-    "build:api": "bun --cwd api run build"
+    "build:ui": "cd ui && bun run build",
+    "build:api": "cd api && bun run build"
   },
   "devDependencies": {
     "@types/bun": "latest",
+    "concurrently": "^9.1.2",
     "typescript": "^5.0.0"
   }
 }
