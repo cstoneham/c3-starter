@@ -1,0 +1,12 @@
+{
+  "name": "@rainmaker/ui",
+  "module": "index.ts",
+  "type": "module",
+  "scripts": {
+    "dev": "bun run --watch index.ts",
+    "build": "bun build index.ts --outdir ./dist"
+  },
+  "devDependencies": {
+    "@types/bun": "latest"
+  }
+}

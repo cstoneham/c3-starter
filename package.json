@@ -1,0 +1,21 @@
+{
+  "name": "rainmaker",
+  "type": "module",
+  "private": true,
+  "workspaces": [
+    "ui",
+    "api"
+  ],
+  "scripts": {
+    "dev:ui": "bun --cwd ui run dev",
+    "dev:api": "bun --cwd api run dev",
+    "dev": "bun run dev:api & bun run dev:ui",
+    "build": "bun run build:ui && bun run build:api",
+    "build:ui": "bun --cwd ui run build",
+    "build:api": "bun --cwd api run build"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "typescript": "^5.0.0"
+  }
+}
