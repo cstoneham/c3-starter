@@ -1,18 +1,40 @@
-import { serve } from "bun";
+import { Hono } from 'hono';
+import { cors } from 'hono/cors';
+import { logger } from 'hono/logger';
 
-const server = serve({
-  port: 3000,
-  fetch(req) {
-    const url = new URL(req.url);
-    
-    if (url.pathname === "/api/health") {
-      return new Response(JSON.stringify({ status: "ok" }), {
-        headers: { "Content-Type": "application/json" }
-      });
-    }
-    
-    return new Response("API endpoint not found", { status: 404 });
-  },
+const app = new Hono();
+
+// Middleware
+app.use('*', logger());
+app.use('*', cors({
+  origin: '*',
+  allowMethods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowHeaders: ['Content-Type'],
+  exposeHeaders: ['Content-Length'],
+  maxAge: 86400,
+}));
+
+// Routes
+app.get('/api/health', (c) => {
+  return c.json({ status: 'ok' });
 });
 
-console.log(`API server listening on http://localhost:${server.port}`);
+// 404 handler
+app.notFound((c) => {
+  return c.json({ message: 'API endpoint not found' }, 404);
+});
+
+// Error handler
+app.onError((err, c) => {
+  console.error(`Error: ${err.message}`);
+  return c.json({ error: 'Internal Server Error' }, 500);
+});
+
+// Start the server
+const port = 3000;
+export default {
+  port,
+  fetch: app.fetch,
+};
+
+console.log(`API server listening on http://localhost:${port}`);
