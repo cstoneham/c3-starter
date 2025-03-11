@@ -1,4 +1,4 @@
-# Rainmaker
+# C3 Starter
 
 A TypeScript monorepo built with Bun.
 
